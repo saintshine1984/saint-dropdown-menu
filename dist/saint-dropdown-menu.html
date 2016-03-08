@@ -136,7 +136,6 @@ Example:
       },
       _select: function(event) {
         this.value = event.detail.item.getAttribute('value');
-        console.log(this.value);
         this.fire('select', {value: this.value});
       }
     });
