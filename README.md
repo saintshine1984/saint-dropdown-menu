@@ -21,13 +21,6 @@ Custom paper-dropdown-menu.
 </saint-birthday-dropdown-menu>
 ```
 
-## Dependencies
-
-Element dependencies are managed via [Bower](http://bower.io/). You can
-install that via:
-
-    npm install -g bower
-
-Then, go ahead and download the element's dependencies:
+## Install
 
     bower install --save saintshine84/saint-dropdown-menu
