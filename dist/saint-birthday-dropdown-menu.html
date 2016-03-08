@@ -236,6 +236,7 @@ Example:
        */
       initDate: {
         type: String,
+        observer: '_dateChanged'
       },
       /**
        * Set to true to disable the error label.
@@ -332,7 +333,6 @@ Example:
       return (this.postfixStyle) ? day + this.dayPostfix : day;
     },
     _convertMonth: function(item) {
-      console.log(item);
       if (this.postfixStyle) {
         return item + this.monthPostfix;
       } else {
