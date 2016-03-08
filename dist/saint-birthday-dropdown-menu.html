@@ -1,0 +1,410 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../paper-menu/paper-menu.html">
+<link rel="import" href="../../paper-item/paper-item.html">
+<script src="js/dateformat.js"></script>
+
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <saint-birthday-dropdown-menu
+      year-start="0"
+      year-end="100"
+      init-date="1984-04-02"
+      on-select="onSelect"
+      postfixStyle>
+    </saint-birthday-dropdown-menu>
+
+@demo
+-->
+<dom-module id="saint-birthday-dropdown-menu">
+  <style>
+    paper-dropdown-menu {
+      width: 100%;
+      --paper-dropdown-menu-button: {
+        padding: 0px;
+      };
+      --paper-input-container: {
+        padding: 0;
+      }
+      --paper-input-container-label: {
+        font-size: 14px;
+        font-weight: 400; 
+        line-height: 20px;
+        text-rendering: auto;
+        font-family: inherit;
+      }
+      --paper-input-container-input: {    
+        font-size: 14px;
+        font-weight: 400; 
+        line-height: 20px;
+        text-rendering: auto;
+        font-family: inherit;
+      };
+    }
+    paper-dropdown-menu paper-item {
+      font-size: 14px;
+      min-height: 30px;
+      text-align: center;
+      
+      --paper-item: {
+        margin: 0 auto;
+      };
+    }
+    .birthday .paper-input-container-1 .input-content.paper-input-container label {
+      font-size: 14px;
+    }
+    .birthday {
+      display: block;
+      float: left;
+      width: 33%;
+    }
+    .month, .day {
+      width: 33%;
+    }
+  </style>
+
+  <template>
+
+    <!-- Year -->
+    <paper-dropdown-menu
+      class="birthday year"
+      label="[[yearLabel]]"
+      no-label-float="[[noLabelFloat]]">
+
+      <paper-menu required class="dropdown-content" on-iron-select="_onSelectDate">
+        <template is="dom-repeat" items="{{years}}">
+          <paper-item value$="{{item}}" type="year">{{_convertYear(item)}}</paper-item>
+        </template>
+      </paper-menu>
+
+    </paper-dropdown-menu>
+
+    <!-- Month -->
+    <paper-dropdown-menu
+      class="birthday month"
+      label="[[monthLabel]]"
+      no-label-float="[[noLabelFloat]]">
+
+      <paper-menu class="dropdown-content" required on-iron-select="_onSelectDate">
+        <template is="dom-repeat" items="{{months}}">
+          <paper-item value$="{{item}}" type="month">{{_convertMonth(item)}}</paper-item>
+        </template>
+      </paper-menu>
+
+    </paper-dropdown-menu>
+
+    <!-- Day -->
+    <paper-dropdown-menu
+      class="birthday day"
+      label="[[dayLabel]]"
+      no-label-float="[[noLabelFloat]]">
+
+      <paper-menu  required class="dropdown-content" on-iron-select="_onSelectDate">
+        <template is="dom-repeat" items="{{days}}">
+          <paper-item value$="{{item}}" type="day">{{_convertDay(item)}}</paper-item>
+        </template>
+      </paper-menu>
+
+    </paper-dropdown-menu>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+  Polymer({
+    is: 'saint-birthday-dropdown-menu',
+    properties: {
+      /**
+       * Date format for value<br>
+       * ### patterns<br>
+       * y : Year         ex. "yyyy" -> "2007", "yy" -> "07"<br>
+       * M : Month        ex. "MM" -> "05" "12", "M" -> "5" "12"<br>
+       * d : Day          ex. "dd" -> "09" "30", "d" -> "9" "30"<br>
+       */
+      dateFormat: {
+        type: String,
+        value: 'yyyy-MM-dd'
+      },
+      /**
+       * Day value
+       */
+      day: {
+        type: Number,
+        value: 0,
+        observer: '_valueChanged'
+      },
+      /**
+       * Day Label
+       */
+      dayLabel: {
+        type: String,
+        value: 'Day',
+      },
+      /**
+       * Day Postfix for postfixStyle
+       */
+      dayPostfix: {
+        type: String,
+        value: '日'
+      },
+      
+      /**
+       * Month value
+       */
+      month: {
+        type: Number,
+        value: 0,
+        observer: '_valueChanged'
+      },
+      /**
+       * Month Label
+       */
+      monthLabel: {
+        type: String,
+        value: 'Month',
+      },
+      /**
+       * Month Postfix for postfixStyle
+       */
+      monthPostfix: {
+        type: String,
+        value: '月'
+      },
+      /**
+       * Year value
+       */
+      year: {
+        type: Number,
+        value: 0,
+        observer: '_valueChanged'
+      },
+      /**
+       * Year Label
+       */
+      yearLabel: {
+        type: String,
+        value: 'Birthday'
+      },
+      /**
+       * Year Postfix for postfixStyle
+       */
+      yearPostfix: {
+        type: String,
+        value: '年'
+      },
+      /**
+       * Start Year. Dropdown item is start from (current year - yearStart);<br>
+       * ex: current year 2016, yearStart 18, Dropdown item is start from 1998 
+       */
+      yearStart: {
+        type: Number,
+        value: 18        
+      },
+      /**
+       * End Year. Dropdown item is end by (current year - yearEnd);
+       * ex: current year 2016, yearEnd 100, Dropdown item is end by 1916
+       */
+      yearEnd: {
+        type: Number,
+        value: 100
+      },
+       /**
+       * value of current selected date.<br>
+       */
+      value: {
+        type: String,
+        computed: '_computeValue(year, month, day)'
+      },
+      /**
+       * pre select date value<br>
+       * ex: init-date="1984-04-02"
+       */
+      initDate: {
+        type: String,
+      },
+      /**
+       * Set to true to disable the error label.
+       */
+      noDisplayError: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+      /**
+       * Set to true to disable the floating label. Bind this to the &lt;paper-input-container&gt;'s noLabelFloat property.
+       */
+      noLabelFloat: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+      /**
+       * Set to true to enable postfix style.<br>
+       * 1984年 04月 02日
+       */
+      postfixStyle: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+      _isReady: {
+        type: Boolean,
+        value: false
+      }
+    },
+    ready: function() {
+      var date = new Date();
+      var yyyy = date.getFullYear();
+      this.years = this._generateArrayList(yyyy - this.yearStart, yyyy - this.yearEnd);
+      this.months = this._generateArrayList(1, 12);
+      this.days = this._generateArrayList(1, 31);
+      if (this.initDate) {
+        var temp = this.initDate.split('-');
+        this.year = parseInt(temp[0]);
+        this.month = parseInt(temp[1]);
+        this.day = parseInt(temp[2]);
+      }
+      this.setDate(this.year, this.month, this.day);
+      document.addEventListener('WebComponentsReady', function() {
+        this._isReady = true;  
+      }.bind(this));
+    },
+    /**
+     * Validates the selected element and sets an error style if needed.
+     * @return {boolean}
+     */
+    validate: function() {
+      var result = true;
+      var pdms = this.querySelectorAll('paper-dropdown-menu');
+      for (var i = 0; i < pdms.length; i++) {
+        if (pdms[i].selectedItem == undefined) {
+          result = false;
+          if (!this.noDisplayError) {
+            this._displayError(pdms[i]);
+          }
+        }
+      }
+      return result;
+    },
+    /**
+     * Change selected item and value by specified date.
+     * @param {number} year value of year.
+     * @param {number} month value of month.
+     * @param {number} day value of day.
+     */
+    setDate: function(year, month, day) {
+      var input_b_year = this.querySelector('.birthday.year paper-menu');
+      var input_b_month = this.querySelector('.birthday.month paper-menu');
+      var input_b_day = this.querySelector('.birthday.day paper-menu');
+      input_b_year.select(this.years.indexOf(year));  
+      input_b_month.select(month - 1);    
+      input_b_day.select(day - 1);
+    },
+    resetDate: function() {
+      this.year = 0;
+      this.month = 0;
+      this.day = 0;
+    },
+    _computeValue: function(year, month, day) {
+      day = day === 0 ? 1 : day;
+      month = month === 0 ? 1 : month;
+      var d = new Date(year, month - 1, day);
+      var dateFormat = new DateFormat(this.dateFormat);
+      var result = dateFormat.format(d);
+      return result;
+    },
+    _convertDay: function(day) {
+      return (this.postfixStyle) ? day + this.dayPostfix : day;
+    },
+    _convertMonth: function(item) {
+      console.log(item);
+      if (this.postfixStyle) {
+        return item + this.monthPostfix;
+      } else {
+        var d = new Date();
+        d.setMonth(item - 1);
+        return d.toLocaleString('en-us', { month: "long" });  
+      }
+    },
+    _convertYear: function(year) {
+      return (this.postfixStyle) ? year + this.yearPostfix : year;
+    },
+    _dateChanged: function(newValue, oldValue)  {
+      if (newValue) {
+        var temp = newValue.split('-');
+        this.year = parseInt(temp[0]);
+        this.month = parseInt(temp[1]);
+        this.day = parseInt(temp[2]);
+      }
+    },
+    _displayError: function(element) {
+      var error = element.querySelector('.focused-line');
+      error.style.backgroundColor = '#db4437';
+      error.style.transform = 'scale3d(1,1,1)';
+      element.addEventListener('tap', function() {
+        var error = this.querySelector('.focused-line');
+        error.style.backgroundColor = '';
+        error.style.transform = 'scale3d(0,1,1)';
+      });
+    },
+    /**
+     * The `select` event is fired whenever selected.
+     *
+     * @event select
+     * @detail {{value: String}}
+     */
+    _fireOnSelect: function() {
+      if (this._isReady) {
+        this.fire('select', {value: this.value});
+      }
+    },
+    _generateArrayList: function(begin, end) {
+      if (typeof end === 'undefined') {
+        end = begin; begin = 0;
+      }
+
+      var result = [];
+      var modifier = end > begin ? 1 : -1;
+      // result.push('指定なし');
+      for (var i = 0; i <= Math.abs(end - begin); i++) {
+        result.push(parseInt(begin + i * modifier));
+      }
+      return result;
+    },
+    _onSelectDate: function(event) {
+      var item = event.detail.item;
+      var type = item.getAttribute('type');
+      var value = item.getAttribute('value')
+      this[type] = parseInt(value);
+      if (this.year && this.month) {
+        var maxDay = 32 - new Date(this.year, this.month-1, 32).getDate();
+        if (this.day && this.day > maxDay) {
+          this.day = 0+'';
+          this._valueChanged();
+        }
+        this.days = this._generateArrayList(1, maxDay);
+      }
+      this._fireOnSelect();
+    },
+    _valueChanged: function(event)  {
+      if (this._isReady) {
+        this.setDate(this.year, this.month, this.day);    
+      }
+    },
+  });
+</script>

@@ -1,0 +1,105 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>saint-dropdown-menu Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../saint-dropdown-menu.html">
+  </head>
+  <style>
+    saint-dropdown-menu {
+      /*max-width: 300px;*/
+    }
+    .example {
+      max-width: 300px;
+      float: left;
+      margin-left: 50px;
+    }
+  </style>
+  <body>
+    <template is="dom-bind" id="app">
+      
+        <div class="example ex1">
+          <h4>&lt;saint-dropdown-menu&gt;</h4>
+
+          <saint-dropdown-menu
+            id="ex1"
+            label="Gender"
+            on-select="onSelect">
+
+            <paper-item value="1">male</paper-item>
+            <paper-item value="2">female</paper-item>
+
+          </saint-dropdown-menu>
+
+          <div>
+            on-select: <span id="result"></span><br>
+            value: <span id="resultByFunc"></span><br>
+            validate : <span id="resultByValidate"></span><br>
+            <button on-click="onClickEx1">getValue</button>
+            <button on-click="validateEx1">validate</button>
+          </div>
+        </div>
+        <div class="example ex2">
+          <h4>&lt;saint-birthday-dropdown-menu&gt;</h4>
+          <saint-birthday-dropdown-menu
+            id="ex2"
+            year-start="0"
+            year-end="100"
+            init-date="1984-04-02"
+            on-select="onSelect"
+            postfix-style>
+          </saint-birthday-dropdown-menu>
+          <div>
+            on-select: <span id="result"></span><br>
+            value: <span id="resultByFunc"></span><br>
+            validate : <span id="resultByValidate"></span><br>
+            <button on-click="onClickEx2">getValue</button>
+            <button on-click="validateEx2">validate</button>
+            <button onClick="app.$.ex2.resetDate();">Reset</button>
+          </div>
+        </div>
+      </template>
+    </template>
+    
+    <script>
+     var app = document.querySelector('#app');
+      app.onSelect = function(event) {
+        var el = Polymer.dom(event).localTarget;
+        var check = (el.localName == 'saint-dropdown-menu');
+        var query = check ? '.ex1 #result' : '.ex2 #result';
+        var span = document.querySelector(query);
+        if (span) {
+          span.innerHTML = JSON.stringify(event.detail.value);
+        }
+      };
+      app.onClickEx1 = function() {
+        var span = document.querySelector('.ex1 #resultByFunc');
+        span.innerHTML = JSON.stringify(app.$.ex1.value);        
+      };
+      app.onClickEx2 = function() {
+        var span = document.querySelector('.ex2 #resultByFunc');
+        span.innerHTML = JSON.stringify(app.$.ex2.value);        
+      };
+      app.validateEx1 = function() {
+        var span = document.querySelector('.ex1 #resultByValidate')
+        span.innerHTML = app.$.ex1.validate();
+      };
+      app.validateEx2 = function() {
+        var span = document.querySelector('.ex2 #resultByValidate')
+        span.innerHTML = app.$.ex2.validate();
+      };
+    </script>
+
+  </body>
+</html>
