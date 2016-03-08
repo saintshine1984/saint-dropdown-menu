@@ -1,22 +1,24 @@
 {
   "name": "saint-dropdown-menu",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "authors": [
     "SHIN <saintshine84@gmail.com>"
   ],
-  "description": "An element providing a solution to no problem in particular.",
+  "description": "extend paper-dropdown-menu",
   "keywords": [
     "web-component",
     "web-components",
     "polymer",
-    "seed"
+    "dropdown-menu",
+    "birthday",
+    "birthdate"
   ],
   "main": [
     "saint-dropdown-menu.html",
     "saint-birthday-dropdown-menu.html"
   ],
   "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/<USERNAME>/seed-element/",
+  "homepage": "https://github.com/saintshine84/saint-dropdown-menu",
   "ignore": [
     "/.*",
     "/test/",
