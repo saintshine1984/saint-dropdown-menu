@@ -27,7 +27,7 @@ Example:
 <dom-module id="saint-dropdown-menu">
   <style>
     :host {
-      width: 100%;
+      width: inherit;
     }
     paper-dropdown-menu {
       width: 100%;
@@ -41,10 +41,12 @@ Example:
     paper-dropdown-menu /deep/ paper-item {
       font-size: 14px;
     }
-    
-
+    #container {
+      width: inherit;
+    }
   </style>
   <template>
+    <div id="container">
     <paper-dropdown-menu
       on-select="[[onSelect]]";
       label="[[label]]"
@@ -56,6 +58,7 @@ Example:
         <content></content>
       </paper-menu>
     </paper-dropdown-menu>
+    </div>
   </template>
 
 </dom-module>
@@ -134,5 +137,3 @@ Example:
     });
   })();
 </script>
-
-

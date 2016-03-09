@@ -59,7 +59,10 @@ Example:
         margin: 0 auto;
       };
     }
-    .saint-birthday-dropdown-menu-container paper-dropdown-menu {
+    #container {
+      width: inherit;
+    }
+    #container paper-dropdown-menu {
       float: left;
     }
     .year {
@@ -71,7 +74,7 @@ Example:
   </style>
 
   <template>
-    <div class="saint-birthday-dropdown-menu-container">
+    <div id="container">
 
       <!-- Year -->
       <paper-dropdown-menu
