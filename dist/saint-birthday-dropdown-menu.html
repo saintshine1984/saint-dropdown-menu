@@ -77,48 +77,50 @@ Example:
   </style>
 
   <template>
+    <div>
 
-    <!-- Year -->
-    <paper-dropdown-menu
-      class="birthday year"
-      label="[[yearLabel]]"
-      no-label-float="[[noLabelFloat]]">
+      <!-- Year -->
+      <paper-dropdown-menu
+        class="birthday year"
+        label="[[yearLabel]]"
+        no-label-float="[[noLabelFloat]]">
 
-      <paper-menu required class="dropdown-content" on-iron-select="_onSelectDate">
-        <template is="dom-repeat" items="{{years}}">
-          <paper-item value$="{{item}}" type="year">{{_convertYear(item)}}</paper-item>
-        </template>
-      </paper-menu>
+        <paper-menu required class="dropdown-content" on-iron-select="_onSelectDate">
+          <template is="dom-repeat" items="{{years}}">
+            <paper-item value$="{{item}}" type="year">{{_convertYear(item)}}</paper-item>
+          </template>
+        </paper-menu>
 
-    </paper-dropdown-menu>
+      </paper-dropdown-menu>
 
-    <!-- Month -->
-    <paper-dropdown-menu
-      class="birthday month"
-      label="[[monthLabel]]"
-      no-label-float="[[noLabelFloat]]">
+      <!-- Month -->
+      <paper-dropdown-menu
+        class="birthday month"
+        label="[[monthLabel]]"
+        no-label-float="[[noLabelFloat]]">
 
-      <paper-menu class="dropdown-content" required on-iron-select="_onSelectDate">
-        <template is="dom-repeat" items="{{months}}">
-          <paper-item value$="{{item}}" type="month">{{_convertMonth(item)}}</paper-item>
-        </template>
-      </paper-menu>
+        <paper-menu class="dropdown-content" required on-iron-select="_onSelectDate">
+          <template is="dom-repeat" items="{{months}}">
+            <paper-item value$="{{item}}" type="month">{{_convertMonth(item)}}</paper-item>
+          </template>
+        </paper-menu>
 
-    </paper-dropdown-menu>
+      </paper-dropdown-menu>
 
-    <!-- Day -->
-    <paper-dropdown-menu
-      class="birthday day"
-      label="[[dayLabel]]"
-      no-label-float="[[noLabelFloat]]">
+      <!-- Day -->
+      <paper-dropdown-menu
+        class="birthday day"
+        label="[[dayLabel]]"
+        no-label-float="[[noLabelFloat]]">
 
-      <paper-menu  required class="dropdown-content" on-iron-select="_onSelectDate">
-        <template is="dom-repeat" items="{{days}}">
-          <paper-item value$="{{item}}" type="day">{{_convertDay(item)}}</paper-item>
-        </template>
-      </paper-menu>
+        <paper-menu  required class="dropdown-content" on-iron-select="_onSelectDate">
+          <template is="dom-repeat" items="{{days}}">
+            <paper-item value$="{{item}}" type="day">{{_convertDay(item)}}</paper-item>
+          </template>
+        </paper-menu>
 
-    </paper-dropdown-menu>
+      </paper-dropdown-menu>
+    </div>
 
   </template>
 
