@@ -26,29 +26,22 @@ Example:
 -->
 <dom-module id="saint-dropdown-menu">
   <style>
+    :host {
+      width: 100%;
+    }
     paper-dropdown-menu {
-      
+      width: 100%;
       --paper-input-container: {
         padding: 0;
       }
       --paper-input-container-label: {
-        font-size: 14px;
-        font-weight: 400; 
-        line-height: 20px;
-        text-rendering: auto;
-        font-family: inherit;
+
       }
-      --paper-input-container-input: {    
-        font-size: 14px;
-        font-weight: 400; 
-        line-height: 20px;
-        text-rendering: auto;
-        font-family: inherit;
-      };
     }
     paper-dropdown-menu /deep/ paper-item {
       font-size: 14px;
     }
+    
 
   </style>
   <template>
