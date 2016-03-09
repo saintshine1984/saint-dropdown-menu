@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../../paper-menu/paper-menu.html">
 <link rel="import" href="../../paper-item/paper-item.html">
-<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+
 <script src="js/dateformat.js"></script>
 
 
@@ -31,7 +31,7 @@ Example:
 @demo
 -->
 <dom-module id="saint-birthday-dropdown-menu">
-  <style include="iron-flex iron-flex-alignment">
+  <style>
     :host {
       width: 100%;
     }
@@ -59,8 +59,8 @@ Example:
         margin: 0 auto;
       };
     }
-    .container {
-      @apply(--layout-horizontal);
+    .saint-birthday-dropdown-menu-container paper-dropdown-menu {
+      float: left;
     }
     .year {
       width: 40%;
@@ -71,7 +71,7 @@ Example:
   </style>
 
   <template>
-    <div class="container">
+    <div class="saint-birthday-dropdown-menu-container">
 
       <!-- Year -->
       <paper-dropdown-menu
