@@ -31,94 +31,68 @@ Example:
 @demo
 -->
 <dom-module id="saint-birthday-dropdown-menu">
-  <style>
-    :host {
-      width: 100%;
-    }
-    paper-dropdown-menu {
-      --paper-dropdown-menu-button: {
-        padding: 0px;
-      };
-      --paper-input-container: {
-        padding: 0;
-      }
-      --paper-input-container-label: {
-        font-size: 14px;
-        font-weight: 400; 
-        line-height: 20px;
-        text-rendering: auto;
-        font-family: inherit;
-      }
-    }
-    paper-dropdown-menu paper-item {
-      font-size: 14px;
-      min-height: 30px;
-      text-align: center;
-      
-      --paper-item: {
-        margin: 0 auto;
-      };
-    }
-    #container {
-      width: inherit;
-    }
-    #container paper-dropdown-menu {
-      float: left;
-    }
-    .year {
-      width: 40%;
-    }
-    .month, .day {
-      width: 30%;
-    }
-  </style>
-
   <template>
-    <div id="container">
+    <style>
+      :host {
+        padding: 8px 0;
+      }
+      paper-dropdown-menu {
+        --paper-dropdown-menu-button: {
+          padding: 0px;
+        };
+        --paper-input-container: {
+          padding: 0;
+        }
+        --paper-input-container-label: {
+          font-size: 14px;
+          line-height: 20px;
+          text-rendering: auto;
+          font-family: inherit;
+        }
+      }
+      paper-dropdown-menu paper-item {
+        font-size: 14px;
+        min-height: 30px;
+        text-align: center;        
+      }
+    </style>
 
+    <div class="layout horizontal layout-start">
       <!-- Year -->
       <paper-dropdown-menu
-        class="birthday year"
+        class="birthday year flex-3"
         label="[[yearLabel]]"
         no-label-float="[[noLabelFloat]]">
-
         <paper-menu required class="dropdown-content" on-iron-select="_onSelectDate">
           <template is="dom-repeat" items="{{years}}">
             <paper-item value$="{{item}}" type="year">{{_convertYear(item)}}</paper-item>
           </template>
         </paper-menu>
-
       </paper-dropdown-menu>
-
       <!-- Month -->
       <paper-dropdown-menu
-        class="birthday month "
+        class="birthday month flex-2"
         label="[[monthLabel]]"
         no-label-float="[[noLabelFloat]]">
-
         <paper-menu class="dropdown-content" required on-iron-select="_onSelectDate">
           <template is="dom-repeat" items="{{months}}">
             <paper-item value$="{{item}}" type="month">{{_convertMonth(item)}}</paper-item>
           </template>
         </paper-menu>
-
       </paper-dropdown-menu>
-
       <!-- Day -->
       <paper-dropdown-menu
-        class="birthday day "
+        class="birthday day flex-2"
         label="[[dayLabel]]"
         no-label-float="[[noLabelFloat]]">
-
         <paper-menu  required class="dropdown-content" on-iron-select="_onSelectDate">
           <template is="dom-repeat" items="{{days}}">
             <paper-item value$="{{item}}" type="day">{{_convertDay(item)}}</paper-item>
           </template>
         </paper-menu>
-
       </paper-dropdown-menu>
     </div>
-
+    <!-- End container -->
   </template>
 
 </dom-module>
