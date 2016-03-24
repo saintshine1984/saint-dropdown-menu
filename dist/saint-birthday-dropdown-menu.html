@@ -8,9 +8,12 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../../paper-menu/paper-menu.html">
 <link rel="import" href="../../paper-item/paper-item.html">
+
+
 
 <script src="js/dateformat.js"></script>
 
@@ -32,7 +35,7 @@ Example:
 -->
 <dom-module id="saint-birthday-dropdown-menu">
   <template>
-    <style>
+    <style is="custom-style" include="iron-flex iron-flex-alignment">
       :host {
         padding: 8px 0;
       }
@@ -56,6 +59,7 @@ Example:
         text-align: center;        
       }
       #container {
+        widows: inherit;
         padding: 8px 0;
       }
     </style>

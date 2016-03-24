@@ -28,7 +28,6 @@ Example:
   <style>
     :host {
 
-      padding: 8px 0;
     }
     paper-dropdown-menu {
       width: 100%;
@@ -44,7 +43,6 @@ Example:
     }
     #container {
       display: block;
-      padding: 8px 0;
     }
   </style>
   <template>
@@ -56,6 +54,7 @@ Example:
       <paper-menu
         class="dropdown-content"
         selected="[[selected]]"
+        value="[[value]]"
         on-iron-select="_select">
         <content></content>
       </paper-menu>
@@ -134,7 +133,7 @@ Example:
       },
       _select: function(event) {
         this.value = event.detail.item.getAttribute('value');
-        this.fire('select', {value: this.value});
+        this.fire('select', {value: this.value, index: 1});
       }
     });
   })();
