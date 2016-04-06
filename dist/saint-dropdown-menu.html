@@ -34,15 +34,19 @@ Example:
       --paper-input-container: {
         padding: 0;
       }
-      --paper-input-container-label: {
-
+      --paper-input-container-input: {
+        @apply(--saint-dropdown-input);
       }
-    }
+      --paper-input-container-label: {
+        @apply(--saint-dropdown-label);
+      }
+    }  
     paper-dropdown-menu /deep/ paper-item {
-      font-size: 14px;
-    }
+      @apply(--saint-dropdown-item);
+    }  
     #container {
       display: block;
+      padding: 8px 0;
     }
   </style>
   <template>
@@ -54,7 +58,6 @@ Example:
       <paper-menu
         class="dropdown-content"
         selected="[[selected]]"
-        value="[[value]]"
         on-iron-select="_select">
         <content></content>
       </paper-menu>
@@ -133,7 +136,7 @@ Example:
       },
       _select: function(event) {
         this.value = event.detail.item.getAttribute('value');
-        this.fire('select', {value: this.value, index: 1});
+        this.fire('select', {value: this.value});
       }
     });
   })();
