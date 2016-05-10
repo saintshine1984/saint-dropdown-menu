@@ -49,25 +49,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <button on-click="validateEx1">validate</button>
           </div>
         </div>
-        <div class="example ex2">
-          <h4>&lt;saint-birthday-dropdown-menu&gt;</h4>
-          <saint-birthday-dropdown-menu
-            id="ex2"
-            year-start="0"
-            year-end="100"
-            init-date="1984-04-02"
-            on-select="onSelect"
-            postfix-style>
-          </saint-birthday-dropdown-menu>
-          <div>
-            on-select: <span id="result"></span><br>
-            value: <span id="resultByFunc"></span><br>
-            validate : <span id="resultByValidate"></span><br>
-            <button on-click="onClickEx2">getValue</button>
-            <button on-click="validateEx2">validate</button>
-            <button onClick="app.$.ex2.resetDate();">Reset</button>
-          </div>
-        </div>
       </template>
     </template>
     
@@ -86,18 +67,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var span = document.querySelector('.ex1 #resultByFunc');
         span.innerHTML = JSON.stringify(app.$.ex1.value);        
       };
-      app.onClickEx2 = function() {
-        var span = document.querySelector('.ex2 #resultByFunc');
-        span.innerHTML = JSON.stringify(app.$.ex2.value);        
-      };
+      
       app.validateEx1 = function() {
         var span = document.querySelector('.ex1 #resultByValidate')
         span.innerHTML = app.$.ex1.validate();
       };
-      app.validateEx2 = function() {
-        var span = document.querySelector('.ex2 #resultByValidate')
-        span.innerHTML = app.$.ex2.validate();
-      };
+      
     </script>
 
   </body>

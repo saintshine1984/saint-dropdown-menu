@@ -1,6 +1,6 @@
 {
   "name": "saint-dropdown-menu",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "authors": [
     "SHIN <saintshine84@gmail.com>"
   ],
@@ -13,10 +13,7 @@
     "birthday",
     "birthdate"
   ],
-  "main": [
-    "saint-dropdown-menu.html",
-    "saint-birthday-dropdown-menu.html"
-  ],
+  "main": "saint-dropdown-menu.html",    
   "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/saintshine84/saint-dropdown-menu",
   "ignore": [
